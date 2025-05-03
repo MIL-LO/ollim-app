@@ -1,0 +1,36 @@
+{
+  "name": "ollim-app",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "dev": "APP_ENV=development npx expo start",
+    "staging": "APP_ENV=staging npx expo start",
+    "prod": "APP_ENV=production npx expo start",
+    "start:dev": "BRANCH=dev expo start",
+    "start:staging": "BRANCH=staging expo start",
+    "start:prod": "BRANCH=main expo start"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "expo": "~53.0.6",
+    "expo-build-properties": "^0.14.6",
+    "expo-constants": "^17.1.5",
+    "expo-secure-store": "^14.2.3",
+    "expo-status-bar": "~2.2.3",
+    "expo-web-browser": "^14.1.6",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
+    "react-native-config": "^1.5.5",
+    "react-native-webview": "^13.13.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@types/react": "~19.0.10",
+    "typescript": "~5.8.3"
+  },
+  "private": true
+}
