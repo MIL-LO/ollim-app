@@ -47,30 +47,12 @@ jobs:
             echo "BUILD_PROFILE=development" >> $GITHUB_ENV
           fi
 
-      - name: 📝 Create environment file
-        run: |
-          # 환경 변수 파일 생성
-          echo "BRANCH=${GITHUB_REF##*/}" > .env
-          # 직접적인 URL을 사용하지 않고 환경 변수 설정
-          echo "DOMAIN_BASE=millo-ollim.com" >> .env
-          echo "DOMAIN_PREFIX=${{ env.DOMAIN_PREFIX }}" >> .env
-
       - name: 📱 Build iOS app
         if: github.event_name != 'pull_request'
         run: |
-          eas build --platform ios --profile ${{ env.BUILD_PROFILE }} --non-interactive
+          npx eas build --platform ios --profile ${{ env.BUILD_PROFILE }} --non-interactive
 
       - name: 📱 Build Android app
         if: github.event_name != 'pull_request'
         run: |
-          eas build --platform android --profile ${{ env.BUILD_PROFILE }} --non-interactive
-
-      - name: 🚀 Submit to App Store (main branch only)
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        run: |
-          eas submit --platform ios --latest
-
-      - name: 🚀 Submit to Play Store (main branch only)
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        run: |
-          eas submit --platform android --latest
+          npx eas build --platform android --profile ${{ env.BUILD_PROFILE }} --non-interactive
