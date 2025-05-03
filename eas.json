@@ -1,13 +1,19 @@
 {
   "cli": {
-    "version": ">= 3.13.3"
+    "version": ">= 3.13.3",
+    "appVersionSource": "remote",
+    "promptToConfigurePushNotifications": false
   },
   "build": {
     "development": {
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
-        "simulator": true
+        "simulator": true,
+        "resourceClass": "m1-medium"
+      },
+      "android": {
+        "resourceClass": "medium"
       },
       "env": {
         "BRANCH": "dev",
@@ -17,6 +23,12 @@
     },
     "preview": {
       "distribution": "internal",
+      "ios": {
+        "resourceClass": "m1-medium"
+      },
+      "android": {
+        "resourceClass": "medium"
+      },
       "env": {
         "BRANCH": "staging",
         "DOMAIN_BASE": "millo-ollim.com",
@@ -24,7 +36,14 @@
       }
     },
     "production": {
+      "autoIncrement": true,
       "distribution": "store",
+      "ios": {
+        "resourceClass": "m1-medium"
+      },
+      "android": {
+        "resourceClass": "medium"
+      },
       "env": {
         "BRANCH": "main",
         "DOMAIN_BASE": "millo-ollim.com",
@@ -33,16 +52,6 @@
     }
   },
   "submit": {
-    "production": {
-      "ios": {
-        "appleId": "your-apple-id@example.com",
-        "ascAppId": "your-app-store-connect-app-id",
-        "appleTeamId": "your-apple-team-id"
-      },
-      "android": {
-        "serviceAccountKeyPath": "path/to/service-account.json",
-        "track": "production"
-      }
-    }
+    "production": {}
   }
 }

@@ -59,10 +59,10 @@ const getDomainInfo = () => {
   return { domainBase, domainPrefix };
 };
 
-// 앱 설정
+// app.config.js
 module.exports = {
   name: "OllimApp",
-  slug: "ollim-app",
+  slug: "ollim",  // ollim-app에서 ollim으로 변경
   version: "1.0.0",
   orientation: "portrait",
   assetBundlePatterns: [
@@ -73,18 +73,23 @@ module.exports = {
     bundleIdentifier: "com.ollim.app"
   },
   android: {
+    package: "com.ollim.app",
     adaptiveIcon: {
       backgroundColor: "#ffffff"
-    },
-    package: "com.ollim.app"
+    }
   },
   web: {},
   extra: {
-    // 민감한 정보 직접 노출 없이 환경 정보 전달
-    branch: getBranch(),
-    ...getDomainInfo(),
     eas: {
-      projectId: "your-project-id"
+      projectId: "25d65e0c-3de4-428a-a8ef-5c23ec7eb033"
     }
-  }
+  },
+  updates: {
+    fallbackToCacheTimeout: 0,
+    url: "https://u.expo.dev/25d65e0c-3de4-428a-a8ef-5c23ec7eb033"
+  },
+  runtimeVersion: {
+    policy: "sdkVersion"
+  },
+  owner: "9bfish8"  // owner 정보 추가
 };

@@ -7,15 +7,12 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-
     "start:dev": "BRANCH=dev DOMAIN_BASE=millo-ollim.com DOMAIN_PREFIX=dev expo start",
     "start:staging": "BRANCH=staging DOMAIN_BASE=millo-ollim.com DOMAIN_PREFIX=dev expo start",
     "start:prod": "BRANCH=main DOMAIN_BASE=millo-ollim.com DOMAIN_PREFIX=app expo start",
-
     "build:dev": "eas build --profile development --platform all",
     "build:staging": "eas build --profile preview --platform all",
     "build:prod": "eas build --profile production --platform all",
-
     "setup:ci": "npm ci",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
@@ -31,11 +28,13 @@
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-config": "^1.5.5",
-    "react-native-webview": "^13.13.5"
+    "react-native-webview": "^13.13.5",
+    "expo-dev-client": "~5.1.8"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.0.10",
+    "eas-cli": "^16.4.0",
     "typescript": "~5.8.3"
   },
   "private": true
