@@ -1,0 +1,76 @@
+name: Expo Build and Deploy
+
+on:
+  push:
+    branches: [main, dev, staging]
+  pull_request:
+    branches: [main, dev, staging]
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🏗 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🔍 Determine build environment
+        id: build-env
+        run: |
+          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+            echo "ENV=production" >> $GITHUB_ENV
+            echo "DOMAIN_PREFIX=app" >> $GITHUB_ENV
+            echo "BUILD_PROFILE=production" >> $GITHUB_ENV
+          elif [[ ${{ github.ref }} == 'refs/heads/staging' ]]; then
+            echo "ENV=staging" >> $GITHUB_ENV
+            echo "DOMAIN_PREFIX=dev" >> $GITHUB_ENV
+            echo "BUILD_PROFILE=preview" >> $GITHUB_ENV
+          else
+            echo "ENV=development" >> $GITHUB_ENV
+            echo "DOMAIN_PREFIX=dev" >> $GITHUB_ENV
+            echo "BUILD_PROFILE=development" >> $GITHUB_ENV
+          fi
+
+      - name: 📝 Create environment file
+        run: |
+          # 환경 변수 파일 생성
+          echo "BRANCH=${GITHUB_REF##*/}" > .env
+          # 직접적인 URL을 사용하지 않고 환경 변수 설정
+          echo "DOMAIN_BASE=millo-ollim.com" >> .env
+          echo "DOMAIN_PREFIX=${{ env.DOMAIN_PREFIX }}" >> .env
+
+      - name: 📱 Build iOS app
+        if: github.event_name != 'pull_request'
+        run: |
+          eas build --platform ios --profile ${{ env.BUILD_PROFILE }} --non-interactive
+
+      - name: 📱 Build Android app
+        if: github.event_name != 'pull_request'
+        run: |
+          eas build --platform android --profile ${{ env.BUILD_PROFILE }} --non-interactive
+
+      - name: 🚀 Submit to App Store (main branch only)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          eas submit --platform ios --latest
+
+      - name: 🚀 Submit to Play Store (main branch only)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          eas submit --platform android --latest

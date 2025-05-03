@@ -1,4 +1,3 @@
-// src/config/index.ts
 import Constants from 'expo-constants';
 
 interface AppConfig {

@@ -7,12 +7,18 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "dev": "APP_ENV=development npx expo start",
-    "staging": "APP_ENV=staging npx expo start",
-    "prod": "APP_ENV=production npx expo start",
-    "start:dev": "BRANCH=dev expo start",
-    "start:staging": "BRANCH=staging expo start",
-    "start:prod": "BRANCH=main expo start"
+
+    "start:dev": "BRANCH=dev DOMAIN_BASE=millo-ollim.com DOMAIN_PREFIX=dev expo start",
+    "start:staging": "BRANCH=staging DOMAIN_BASE=millo-ollim.com DOMAIN_PREFIX=dev expo start",
+    "start:prod": "BRANCH=main DOMAIN_BASE=millo-ollim.com DOMAIN_PREFIX=app expo start",
+
+    "build:dev": "eas build --profile development --platform all",
+    "build:staging": "eas build --profile preview --platform all",
+    "build:prod": "eas build --profile production --platform all",
+
+    "setup:ci": "npm ci",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
